@@ -21,11 +21,39 @@
             justify-content: center;
             align-items: center;
         }
+
+        h1 {
+            display: block;
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <h1>Facebook Downtime</h1>
+    <div>
+        <h1>Facebook Downtime</h1>
+        <h2>2021 yearly uptime is <span id="ut">99.99%</span></h2>
+    </div>
+    <script type="text/javascript">
+        function getDowntime() {
+            var d = new Date(2021, 9, 4, 16, 00, 0, 0).getTime();
+            var now = new Date();
+            var off = now.getTimezoneOffset() * 60000;
+            now = now.getTime();
+            var downtime = (100 - (((now + off) - d) / 31536000000) * 100);
+            return (Math.round(downtime * 1000000) / 1000000).toFixed(6) + "%";
+        }
+
+        $(document).ready(function () {
+            update();
+        });
+
+        function update() {
+            $("#ut").text(getDowntime());
+            setTimeout('update()', 1000);
+        }
+    </script>
 </body>
 
 </html>
